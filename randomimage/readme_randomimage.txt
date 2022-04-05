@@ -1,7 +1,7 @@
 Necessary packages:
 - os
 - random
-- PIL
-- os.path
+- subprocess
+- sys
 
-If your folders and/or subfolders contain files that are NOT: png, jpg, jpeg, jfif or gif: please include those extensions in the variable badextensions.
+Usage: python randomimage.py <folder>

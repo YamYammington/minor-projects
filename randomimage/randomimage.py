@@ -1,75 +1,27 @@
-import os
-import random
-from PIL import Image
-import os.path
+from os import listdir
+from os.path import join, isdir
+from random import choice
+from subprocess import call
+from sys import argv
 
-extensions = ["png", "jpg", "jpeg", "jfif", "gif"]
+FAIL = '\033[91m'
+ENDC = '\033[0m'
+OKCYAN = '\033[96m'
+extensions = ("png", "jpg", "jpeg", "jfif", "gif", "PNG", "JPG", "JPEG", "JFIF", "GIF")
 
-# If your folders and/or subfolders contain files that are NOT: png, jpg, jpeg, jfif or gif: please include those extensions in the variable below.
-badextensions = []
-folder = os.getcwd()
+
+def search_file(filepath):
+    chosen_file = join(filepath, choice(listdir(filepath)))
+    match chosen_file:
+        case chosen_file if isdir(chosen_file):
+            search_file(chosen_file)
+        case chosen_file if chosen_file.endswith(data.extensions):
+            print(f"{data.ENDC}{chosen_file}")
+            call([chosen_file], shell=True)
+        case _:
+            search_file(filepath)
 
 
-def main():
-    try:
-        file1 = random.choice(os.listdir(folder))
-        path_to_file = os.path.join(folder, file1)
-
-        if file1.endswith(tuple(extensions)):
-            print(f"\n{path_to_file}")
-            im1 = Image.open(path_to_file)
-            im1.show()
-        elif file1.endswith(tuple(badextensions)):
-            main()
-        else:
-            file2 = random.choice(os.listdir(path_to_file))
-            path_to_file = os.path.join(path_to_file, file2)
-
-            if path_to_file.endswith(tuple(extensions)):
-                print(f"\n{path_to_file}")
-                im2 = Image.open(path_to_file)
-                im2.show()
-            elif path_to_file.endswith(tuple(badextensions)):
-                main()
-            else:
-                file3 = random.choice(os.listdir(path_to_file))
-                path_to_file = os.path.join(path_to_file, file3)
-
-                if path_to_file.endswith(tuple(extensions)):
-                    print(f"\n{path_to_file}")
-                    im3 = Image.open(path_to_file)
-                    im3.show()
-                elif path_to_file.endswith(tuple(badextensions)):
-                    main()
-                else:
-
-                    file4 = random.choice(os.listdir(path_to_file))
-                    path_to_file = os.path.join(path_to_file, file4)
-
-                    if path_to_file.endswith(tuple(extensions)):
-                        print(f"\n{path_to_file}")
-                        im4 = Image.open(path_to_file)
-                        im4.show()
-                    elif path_to_file.endswith(tuple(badextensions)):
-                        main()
-                    else:
-                        file5 = random.choice(os.listdir(path_to_file))
-                        path_to_file = os.path.join(path_to_file, file5)
-
-                        if path_to_file.endswith(tuple(extensions)):
-                            print(f"\n{path_to_file}")
-                            im5 = Image.open(path_to_file)
-                            im5.show()
-                        elif path_to_file.endswith(tuple(badextensions)):
-                            main()
-                        else:
-                            print("ERROR: An image was not found. Retrying...")
-                            main()
-    except PermissionError:
-        print("ERROR: Access denied. Retrying...")
-        main()
-    except Exception:
-        print("ERROR: Unsupported file type. Retrying...")
-        main()
-
-main()
+if __name__ == "__main__":
+    folder = argv[1]
+    search_file(folder)
