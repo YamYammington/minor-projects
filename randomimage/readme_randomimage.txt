@@ -1,7 +1,3 @@
-Necessary packages:
-- os
-- random
-- subprocess
-- sys
+No additional packages required.
 
 Usage: python randomimage.py <folder>
