@@ -19,7 +19,9 @@ def search_file(filepath):
 
 
 if __name__ == "__main__":
-    folder = argv[1]
-    if not folder:
+    try:
+        folder = argv[1]
+    except IndexError:
         folder = getcwd()
+        
     search_file(folder)
