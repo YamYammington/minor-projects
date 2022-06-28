@@ -14,6 +14,10 @@ def main(folder):
 
 
 if __name__ == "__main__":
-    location = argv[1] if argv[1] else os.getcwd()
+    try:
+        location = argv[1]
+    except IndexError:
+        location = os.getcwd()
+        
     main(location)
     input("Press Enter to continue...")
