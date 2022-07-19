@@ -6,7 +6,10 @@ def parser(s: str) -> tuple:
     s = s.removeprefix('@kw ')
 
     keywords = re.findall(r"\b([a-zA-Z\d]+)(\||&)([a-zA-Z\d]+)\b", s, overlapped=True)
-    not_kws = [f for f in re.findall(r"n\(((![a-zA-Z\d]+)+)\)", s)[0][0].split('!') if f]
+    if "n(!" in s:
+        not_kws = [f for f in re.findall(r"n\(((![a-zA-Z\d]+)+)\)", s)[0][0].split('!') if f]
+    else:
+        not_kws = []
 
     _and = []
     _or = []
@@ -59,4 +62,4 @@ if __name__ == '__main__':
     kw_str = ""
     path = ""
     print(parse(kw_str, path))
-    # print(parse("@kw untitled|happy n(!yes)", "C:\\Users\\Yammington\\Downloads"))
+    # print(parse("@kw untitled|happy", "C:\\Users\\Yammington\\Downloads"))
