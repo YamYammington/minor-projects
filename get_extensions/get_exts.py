@@ -4,7 +4,7 @@ import os, sys
 def main(folder):
     ext = []
 
-    for file in os.listdir():
+    for file in os.listdir(folder):
         extension = file.split(".")[-1]
         if extension not in ext:
             print(extension)
