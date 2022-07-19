@@ -2,34 +2,40 @@ from datetime import datetime
 import sys
 
 
-def readable_timestamp(time: datetime | int | float) -> str:
-    if isinstance(time, int) or isinstance(time, float):
-        time = datetime.fromtimestamp(time)
+def readable_timestamp(t: datetime | int | float) -> str:
+    """
+    :param t: epoch timestamp (either integer or floating point) or datetime object
+    :return: human-readable time
+
+    Converts a timestamp to a human-readable time, such as: "1 hour ago" or "2 days ago"
+    """
+    if isinstance(t, int) or isinstance(t, float):
+        t = datetime.fromtimestamp(t)
     now = datetime.now()
-    delta = now - time
+    delta = now - t
     if (delta.seconds * -1) > delta.seconds:  # check if in future
-        return "somewhere in the future"
+        return "Somewhere in the future"
     if delta.days == 0:
         if delta.seconds < 60:
-            return f"{delta.seconds} seconds ago"
+            return "just now"
         elif delta.seconds < 120:
             return "1 minute ago"
         elif delta.seconds < 3600:
-            return f"{delta.seconds // 60} minutes ago"
+            return str(delta.seconds // 60) + " minutes ago"
         elif delta.seconds < 7200:
             return "1 hour ago"
         elif delta.seconds < 86400:
-            return f"{delta.seconds // 3600} hours ago"
+            return str(delta.seconds // 3600) + " hours ago"
     elif delta.days == 1:
-        return "yesterday"
+        return "Yesterday"
     elif delta.days < 7:
-        return f"{delta.days} days ago"
+        return str(delta.days) + " days ago"
     elif delta.days < 31:
-        return f"{delta.days // 7} weeks ago"
+        return str(delta.days // 7) + " weeks ago"
     elif delta.days < 365:
-        return f"{delta.days // 30} months ago"
+        return str(delta.days // 30) + " months ago"
     else:
-        return f"{delta.days // 365} years ago"
+        return str(delta.days // 365) + " years ago"
 
 
 if __name__ == "__main__":
